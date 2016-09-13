@@ -4,7 +4,6 @@ import {
   ActivityIndicator,
   AppRegistry,
   StyleSheet,
-  NavigatorIOS,
   View,
   Text,
   Image,
