@@ -1,35 +1,28 @@
+'use strict'
+
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
+ * Sample React Native and Redux
+ * https://github.com/yaodianmi/DoubanBookRnRedux
  */
 
 import React, { Component } from 'react';
 import {
   AppRegistry,
-  StyleSheet,
-  NavigatorIOS,
 } from 'react-native';
-import SearchScreen from './SearchScreen';
+import { Provider } from 'react-redux';
+import configureStore from './app/store/configureStore';
+import App from './app/app';
+
+const store = configureStore()
 
 class DoubanBookRnRedux extends Component {
   render() {
     return (
-      <NavigatorIOS
-        style={styles.container}
-        initialRoute={{
-          title: 'Books',
-          component: SearchScreen,
-        }}
-      />
+      <Provider store={store}>
+        <App />
+      </Provider>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
-});
 
 AppRegistry.registerComponent('DoubanBookRnRedux', () => DoubanBookRnRedux);

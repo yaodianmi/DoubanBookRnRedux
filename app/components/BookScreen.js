@@ -67,20 +67,11 @@ class Tags extends Component {
   }
 
   selectTag(tag) {
-    if (Platform.OS === 'ios') {
-      this.props.navigation.push({
-        title: tag.title,
-        component: SearchScreen,
-        passProps: {tag},
-      });
-    } else {
-      dismissKeyboard();
-      this.props.navigation.push({
-        title: tag.title,
-        name: 'tag',
-        book: tag,
-      });
-    }
+    this.props.navigation.push({
+      name: 'tag',
+      title: tag.title,
+      tag: tag
+    });
   }
 
   render() {
@@ -162,6 +153,7 @@ var styles = StyleSheet.create({
     fontFamily: 'Palatino',
     fontSize: 13,
     fontWeight: '500',
+    color: 'green',
   },
   mainSection: {
     flexDirection: 'row',
