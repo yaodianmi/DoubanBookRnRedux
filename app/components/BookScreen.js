@@ -54,7 +54,7 @@ export default class BookScreen extends Component {
         <Tags
           key={this.props.book.id}
           tags={this.props.book.tags}
-          navigation={this.props.navigation}
+          navigator={this.props.navigator}
         />
       </ScrollView>
     );
@@ -67,7 +67,7 @@ class Tags extends Component {
   }
 
   selectTag(tag) {
-    this.props.navigation.push({
+    this.props.navigator.push({
       name: 'tag',
       title: tag.title,
       tag: tag

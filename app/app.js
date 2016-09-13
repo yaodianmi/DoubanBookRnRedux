@@ -17,7 +17,7 @@ import BookScreen from './components/BookScreen';
 
 export default class App extends Component {
   renderScene(route, navigator){
-    if(route.name == 'book_detail'){
+    if(route.name == 'book_detail') {
       return <BookScreen book={route.book} navigator={navigator}/>
     } else {
       return <SearchScreen navigator={navigator} tag={route.tag}/>;
