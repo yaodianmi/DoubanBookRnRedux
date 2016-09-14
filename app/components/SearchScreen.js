@@ -62,8 +62,8 @@ class NoBooks extends Component {
   }
 }
 
-//export default class SearchScreen extends Component {
-class SearchScreen extends Component {
+
+export default  class SearchScreen extends Component {
   constructor(props) {
     super(props);
     this.ds = new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2})
@@ -231,17 +231,3 @@ const styles = StyleSheet.create({
     opacity: 0.0,
   },
 });
-
-const mapStateToProps = (state) => {
-  return {
-    search: state.search,
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        actions: bindActionCreators(actionCreators, dispatch)
-    }
-}
-
-export default SearchScreen = connect(mapStateToProps, mapDispatchToProps)(SearchScreen)

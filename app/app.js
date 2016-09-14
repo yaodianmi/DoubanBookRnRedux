@@ -11,7 +11,8 @@ import {
 import {
     connect
 } from 'react-redux';
-import SearchScreen from './components/SearchScreen';
+
+import SearchScreenRoot from './containers/App';
 import BookScreen from './components/BookScreen';
 
 
@@ -20,7 +21,7 @@ export default class App extends Component {
     if(route.name == 'book_detail') {
       return <BookScreen book={route.book} navigator={navigator}/>
     } else {
-      return <SearchScreen navigator={navigator} tag={route.tag}/>;
+      return <SearchScreenRoot navigator={navigator} tag={route.tag}/>;
     }
   }
   getNavigationBar(){
