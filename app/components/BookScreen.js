@@ -70,7 +70,7 @@ class Tags extends Component {
     this.props.navigator.push({
       name: 'tag',
       title: tag.title,
-      tag: tag
+      tag: tag.name
     });
   }
 

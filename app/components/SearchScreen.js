@@ -82,15 +82,11 @@ class SearchScreen extends Component {
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
     };
-    this.searchBooks = debounce(this.searchBooks, 500);
-    // 在ES6中，如果在自定义的函数里使用了this关键字，则需要对其进行“绑定”操作，否则this的指向会变为空
-    // 像下面这行代码一样，在constructor中使用bind是其中一种做法（还有一些其他做法，如使用箭头函数等）
-    this.searchBooks = this.searchBooks.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     if (this.props.tag) {
-      this.searchBooks(this.props.tag.name, 'tag');
+      this.props.actions.runSearch(this.props.tag, 'tag');
     }
   }
 
@@ -104,15 +100,11 @@ class SearchScreen extends Component {
 
   onSearchChange(event) {
     let filter = event.nativeEvent.text.toLowerCase();
-    //this.searchBooks(filter);
     let { actions } = this.props;
-    actions.runSearch(filter);
+    actions.runSearch(filter, undefined);
   }
 
   onSwitchChange(value){
-    /*this.setState({
-      is8Star: value,
-    });*/
     let { actions } = this.props;
     actions.set8Star(value);
   }
@@ -130,16 +122,12 @@ class SearchScreen extends Component {
     }
 
     LOADING[query] = true;
-    /*this.setState({
-      queryNumber: this.state.queryNumber + 1,
-      isLoadingTail: true,
-    });*/
 
     let { actions } = this.props;
     if (this.props.tag) {
-      actions.moreBooks(query, start, 'tag');
+      actions.moreBooks(query, 'tag');
     } else {
-      actions.moreBooks(query, start, undefined);
+      actions.moreBooks(query, undefined);
     }
   }
 
@@ -215,6 +203,7 @@ class SearchScreen extends Component {
           runSearch={this.props.actions.runSearch}
           onSwitchChange={this.onSwitchChange.bind(this)}
           isLoading={this.props.search.isLoading}
+          tag={this.props.tag}
           onFocus={() =>
             this.refs.listview && this.refs.listview.getScrollResponder().scrollTo({ x: 0, y: 0 })}
         />

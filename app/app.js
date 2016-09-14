@@ -52,7 +52,7 @@ export default class App extends Component {
   render(){
     return (
       <Navigator
-        initialRoute={{name:'home', title:'首页', tag:'计算机'}}
+        initialRoute={{name:'home', title:'首页', tag:'灵魂幸存者'}}
         renderScene={this.renderScene}
         navigationBar={this.getNavigationBar()}
         configureScene={(route, routeStack) => Navigator.SceneConfigs.FadeAndroid}

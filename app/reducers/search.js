@@ -41,7 +41,7 @@ const search = (state = initialSearchState, action) => {
 			})
 		case SEARCH_RESULT:
 			return Object.assign({}, state, {
-				isLoadingTail: true,
+				isLoadingTail: false,
 				isLoading: false,
 				books: action.data,
 			})

@@ -27,7 +27,7 @@ const LOADING = {};
 export const newSearch = () => ({type: NEW_SEARCH})
 export const setSearchKeyword = (filter) => ({type: SET_SEARCH_KEYWORD, filter})
 export const set8Star = (value) => ({type: SET_8_STAR, value})
-export const runSearch = (filter) => (dispatch) => _searchBooks(dispatch, filter)
+export const runSearch = (filter, type) => (dispatch) => searchBooks(dispatch, filter, type)
 export const moreBooks = (filter, type) => (dispatch) => _moreBooks(dispatch, filter, type)
 
 
@@ -52,10 +52,6 @@ const _fetch = (dispatch, query, start, type='q') => {
 			resultsCache.dataForQuery[query] = responseJson.books;
 			resultsCache.nextStartForQuery[query] = 10;
 
-			/*this.setState({
-				isLoading: false,
-				dataSource: this.getDataSource(responseJson.books),
-			});*/
 			dispatch(_searchResultReceived(responseJson.books));
 		})
 		.catch((error) => {
@@ -64,27 +60,18 @@ const _fetch = (dispatch, query, start, type='q') => {
 			resultsCache.dataForQuery[query] = undefined;
 
 			dispatch(_searchFailed(err))
-			/*this.setState({
-				dataSource: this.getDataSource([]),
-				isLoading: false,
-			});*/
 		});
 }
 
-const _searchBooks = (dispatch, query, type='q') => {
+const searchBooks = (dispatch, query, type='q') => {
 	//this.setState({filter: query});
 	dispatch(setSearchKeyword(query));
 
 	let cachedResultsForQuery = resultsCache.dataForQuery[query];
 	if (cachedResultsForQuery) {
 		if (!LOADING[query]) {
-			/*this.setState({
-				dataSource: this.getDataSource(cachedResultsForQuery),
-				isLoading: false
-			});*/
 			dispatch(_searchResultReceived(cachedResultsForQuery));
 		} else {
-			//this.setState({isLoading: true});
 			dispatch(_searchStarted(query));
 		}
 		return;
@@ -92,10 +79,6 @@ const _searchBooks = (dispatch, query, type='q') => {
 
 	LOADING[query] = true;
 	resultsCache.dataForQuery[query] = null;
-	/*this.setState({
-		isLoading: true,
-		isLoadingTail: false,
-	});*/
 	dispatch(_searchStarted(query));
 
 	if (query.trim()) {

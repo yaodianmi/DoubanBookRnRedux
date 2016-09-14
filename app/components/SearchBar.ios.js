@@ -12,8 +12,8 @@ import {
 export default class SearchBar extends Component {
   render() {
     let placeholderText = "请输入搜索关键词..."
-    if (this.props.filter) {
-      placeholderText = `${this.props.filter}`;
+    if (this.props.tag) {
+      placeholderText = `${this.props.tag}`;
     }
 
     return (
