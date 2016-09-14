@@ -3,6 +3,7 @@
 import { combineReducers } from 'redux';
 
 import {
+	SET_8_STAR,
 	SET_SEARCH_KEYWORD,
 	SEARCH_STARTED,
 	SEARCH_ENDED,
@@ -27,6 +28,8 @@ const initialSearchState = {
 
 const search = (state = initialSearchState, action) => {
 	switch (action.type) {
+		case SET_8_STAR:
+			return Object.assign({}, state, {is8Star: action.value})
 		case SET_SEARCH_KEYWORD:
 			return Object.assign({}, state, {filter: action.filter})
 		case SEARCH_STARTED:
