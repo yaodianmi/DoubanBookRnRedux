@@ -6,6 +6,8 @@ import {
 	SET_8_STAR,
 	SEARCH_RESULT,
 	SEARCH_ENDED,
+	MORE_STARTED,
+	MORE_SEARCH_RESULT
 } from './constants/ActionTypes';
 
 
@@ -97,14 +99,12 @@ export const hasMore = (query) => {
 }
 
 const _fetchNext = (dispatch, query, start, type='q') => {
-	fetch(this._urlForQuery(query, start, type))
+	fetch(_urlForQuery(query, start, type))
 		.then((response) => response.json())
 		.catch((error) => {
 			console.error(error);
 			LOADING[query] = false;
-			this.setState({
-				isLoadingTail: false,
-			});
+			dispatch(_searchFailed(error))
 		})
 		.then((responseJson) => {
 			let booksForQuery = resultsCache.dataForQuery[query].slice();
@@ -121,27 +121,27 @@ const _fetchNext = (dispatch, query, start, type='q') => {
 				resultsCache.nextStartForQuery[query] += 10;
 			}
 
-			if (this.state.filter !== query) {
-				// do not update state if the query is stale
-				return;
-			}
-
-			this.setState({
-				isLoadingTail: false,
-				dataSource: this.getDataSource(resultsCache.dataForQuery[query]),
-			});
+			dispatch(_moreSearchResultReceived(resultsCache.dataForQuery[query]));
 		})
 		.done();
 }
 
 const _moreBooks = (dispatch, query, type='q') => {
+	if (LOADING[query]) {
+		return;
+	}
+
+	LOADING[query] = true;
+	dispatch(_moreStarted(query))
+
 	let start = resultsCache.nextStartForQuery[query];
-	_fetchNext = (dispatch, query, start, type);
+	_fetchNext(dispatch, query, start, type);
 }
 
 
 const _searchStarted = (filter) => ({type: SEARCH_STARTED, filter})
 const _searchEnded = (filter) => ({type: SEARCH_ENDED, filter})
 const _searchResultReceived = (data) => ({type: SEARCH_RESULT, data})
+const _moreStarted = (filter) => ({type: MORE_STARTED, filter})
 const _moreSearchResultReceived = (data) => ({type: MORE_SEARCH_RESULT, data})
 const _searchFailed = (message) => ({type: SEARCH_FAILED, message})

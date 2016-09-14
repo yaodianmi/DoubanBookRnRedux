@@ -8,6 +8,7 @@ import {
 	SEARCH_ENDED,
 	SEARCH_RESULT,
 	SEARCH_FAILED,
+	MORE_STARTED,
 	MORE_SEARCH_RESULT,
 	NEW_SEARCH,
 } from '../constants/ActionTypes';
@@ -45,9 +46,11 @@ const search = (state = initialSearchState, action) => {
 				isLoading: false,
 				books: action.data,
 			})
+		case MORE_STARTED:
+			return Object.assign({}, state, {isLoadingTail: true})
 		case MORE_SEARCH_RESULT:
 			return Object.assign({}, state, {
-				isLoadingTail: true,
+				isLoadingTail: false,
 				isLoading: false,
 				books: action.data,
 			})

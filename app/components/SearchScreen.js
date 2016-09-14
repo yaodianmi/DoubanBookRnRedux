@@ -33,16 +33,6 @@ import {
 const doubanImgLogo = 'https://img3.doubanio.com/f/shire/8308f83ca66946299fc80efb1f10ea21f99ec2a5/pics/nav/lg_main_a11_1.png'
 const doubanApiBookSearch = 'https://api.douban.com/v2/book/search'
 
-// Results should be cached keyed by the query
-// with values of null meaning "being fetched"
-// and anything besides null and undefined
-// as the result of a valid query
-var resultsCache = {
-  dataForQuery: {},
-  nextStartForQuery: {},
-  totalForQuery: {},
-};
-var LOADING = {};
 
 class Logo extends Component{
   render(){
@@ -116,12 +106,6 @@ class SearchScreen extends Component {
       // We're already fetching or have all the elements so noop
       return;
     }
-
-    if (LOADING[query]) {
-      return;
-    }
-
-    LOADING[query] = true;
 
     let { actions } = this.props;
     if (this.props.tag) {
